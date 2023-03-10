@@ -1,0 +1,5 @@
+config:
+    portainer: 
+        - url: http://example.lan/
+          apiKey: 123456
+          
