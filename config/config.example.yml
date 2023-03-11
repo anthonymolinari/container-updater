@@ -1,21 +1,41 @@
 portainer: 
-  url: "http://example.lan/"
-  interval: "" # uses cron syntax
+  url: "http://portainer.lan"
+  interval: 60 # polling interval 
 
 containers:
 
   - name: "sonarr"
     portainer:
-      webhook: "http://portainer.lan/api/webhooks/abcd12345" # webhook url from portainer
+      webhook: ""
     container:
-      url: "http://sonarr.lan" # base url for sonarr
+      isServarr: true
+      apiVer: "v3"
+      url: "http://sonarr.lan"
       apiKey: "sonarrapikey"
 
   - name: "radarr"
     portainer:
-      webhook: "http://portainer.lan/api/webhooks/abcd12345" # webhook url from portainer
+      webhook: ""
     container:
-      url: "http://radarr.lan" # base url for sonarr
+      isServarr: true
+      apiVer: "v3"
+      url: "http://radarr.lan"
       apiKey: "radarrapikey"
+
+  - name: "prowlarr"
+    portainer:
+      webhook: ""
+    container:
+      isServarr: true
+      apiVer: "v1"
+      url: "http://prowlarr.lan"
+      apiKey: "prowlarrapikey"
       
-  
+notifications:
+
+  discord:
+    webhook: "https://discord.com/api/webhooks/"
+
+
+misc:
+  clean: false # use portainer api to remove 'unused images'
