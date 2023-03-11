@@ -4,6 +4,5 @@
 */__pycache__
 .gitignore
 README.md
-./tests
 docker-compose.yml
 dockerfile
