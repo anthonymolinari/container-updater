@@ -1,7 +1,7 @@
 .git
 .github
 .dockerignore
-__pycache__
+*/__pycache__
 .gitignore
 README.md
 ./tests
