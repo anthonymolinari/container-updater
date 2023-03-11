@@ -9,7 +9,7 @@ def validate(config) -> bool:
     return True
 
 
-def parseConfig() -> any:
+def loadConfig() -> any:
     logger.log("loading config")
     try:
         with open('../config/config.yml', 'r') as config_file:
@@ -36,7 +36,7 @@ def updater(container, discord_webhook):
 
 def main(): 
     # load configuration
-    config = parseConfig()
+    config = loadConfig()
     if not validate(config):
         exit(2)
     threads = list()
