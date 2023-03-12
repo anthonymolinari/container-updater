@@ -24,14 +24,15 @@ def loadConfig() -> any:
 
 def updater(container, discord_webhook):
     if container['container']['isServarr']:
-        webhooks.servarrUpdate(
+        if webhooks.servarrUpdate(
             container['container']['url'], 
             container['container']['apiKey'], 
             container['name'],
             container['container']['apiVer'],
             discord_webhook
-        )
-            
+        ):
+            stat = webhooks.portainerWebhook(container['portainer']['webhook'])
+            logger.log(f'portainer reponse: {stat}')
 
 
 def main(): 
