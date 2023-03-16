@@ -2,7 +2,7 @@ name: Run Dagger Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   dagger:
@@ -17,5 +17,5 @@ jobs:
       - name: install deps
         run: pip install -r ./dagger/requirements.txt
       - name: Execute pipeline
-        run: python ./dagger/requirements.txt
+        run: python ./dagger/pipline.py
                 
