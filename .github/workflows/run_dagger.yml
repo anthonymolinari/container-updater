@@ -17,5 +17,5 @@ jobs:
       - name: install deps
         run: pip install -r ./dagger/requirements.txt
       - name: Execute pipeline
-        run: python ./dagger/pipline.py
+        run: python ./dagger/pipeline.py
                 
