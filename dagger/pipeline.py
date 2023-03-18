@@ -3,17 +3,26 @@ import anyio
 import dagger 
 
 async def buildImage():
-     async with dagger.Connection(dagger.Config(log_out=sys.stderr)) as client:
+     async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
           src = client.host().directory(".")
+          # username = client.host().env_variable("DOCKER_HUB_USERNAME")
+          token = client.host().env_variable("DOCKER_HUB_TOKEN")
+
           python = (
-               client.container().from_("python:3.10-slim-buster")
-               .with_mounted_directory("/src", src)
-               .with_workdir("/src")
-               .with_exec(["pip", "install", "-r", "requirements.txt"])
-               .with_exec(["ls"])
+               client.container()
+               .with_mounted_directory("/app", src)
+               .with_workdir("/app")
+               .build(src)
+               .with_registry_auth(
+                    "docker.io",
+                    "anthonymolinari",
+                    token.secret()
+               )
+               .publish("docker.io/anthonymolinari/container-updater:latest")
           )
-          await python.exit_code()
-     print("Test Finished")
+          await python
+
+     print("Finished build")
 
 
 if __name__ == "__main__":

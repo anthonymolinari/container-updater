@@ -3,7 +3,7 @@ version: '3.0'
 services:
   container_updater:
     container_name: container_updater
-    image: anthonymolinari/container-updater
+    image: anthonymolinari/container-updater:latest
     volumes:
-      - /path/on/host/config/config.yml:/app/config/config.yml
+      - /path/on/host/config:/app/config
     

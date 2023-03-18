@@ -1,3 +1,5 @@
+## this is the example config
+
 portainer: 
   url: "http://portainer.lan"
   interval: 60 # polling interval 
@@ -39,3 +41,4 @@ notifications:
 
 misc:
   clean: false # use portainer api to remove 'unused images'
+  

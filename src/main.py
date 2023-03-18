@@ -12,7 +12,7 @@ def validate(config) -> bool:
 def loadConfig() -> any:
     logger.log("loading config")
     try:
-        with open('../config/config.yml', 'r') as config_file:
+        with open('./config/config.yml', 'r') as config_file:
             config = yaml.safe_load(config_file)
     except:
         logger.log("failed to open configuration file, you may need to create one.")
