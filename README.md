@@ -1,17 +1,17 @@
 # Container Updater
-A simple python script that uses portainer webhooks to update containers.
+A python script that uses portainer webhooks to update containers.
 
 ## Supports Version Checks
-- servarr applications: sonarr, radarr, prowlarr, lidarr
-- coming soon plex, jellyfin
-
+- servarr applications: sonarr, radarr, prowlarr, lidarr, etc.
+- coming soon plex, jellyfin, tautulli
 
 ## example configuration
 ` ./config/config.yml`
 ```
+schedule: "*/5 * * * *" # check for updates every 5 minutes
+
 portainer: 
   url: "http://portainer.lan"
-  interval: 60 # polling interval 
 
 containers:
 
@@ -50,4 +50,13 @@ notifications:
 
 misc:
   clean: false # use portainer api to remove 'unused images'
+  
+```
+## Run Command
+```
+docker run -d \
+  -v /path/to/config/:/app/config/
+  -e "TZ=America/Los_Angeles"
+  --name container-updater
+  anthonymolinari/container-updater:latest
 ```
