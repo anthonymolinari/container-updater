@@ -1,2 +1,5 @@
 pyyaml
 requests
+asyncio
+croniter
+aiocron
