@@ -3,7 +3,6 @@ schedule: "*/5 * * * *" # check for updates every 5 minutes
 
 portainer: 
   url: "http://portainer.lan"
-  interval: 60 # polling interval 
 
 containers:
 
