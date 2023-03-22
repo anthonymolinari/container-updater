@@ -1,6 +1,6 @@
 import requests as req
-
 from utils import logger
+from providers.discord import discordNotification
 
 def servarrUpdate(base_url: str, apiKey: str, name: str, apiVer, discord_url: str) -> bool:
     url = f'{base_url}/api/{apiVer}/update?apiKey={apiKey}'
@@ -17,24 +17,3 @@ def servarrUpdate(base_url: str, apiKey: str, name: str, apiVer, discord_url: st
     logger.log(f'new update available for {name}: { release["version"] }')
     discordNotification(discord_url, f'new update available for {name}: ver { release["version"] }')
     return True
-
-
-def portainerWebhook(webhook_url: str) -> int:
-    logger.log('requesting container update: ')
-    res = req.post(webhook_url)
-    if res.status_code != 200 or res.status_code != 204:
-        # log error to console
-        logger.error(f'invalid webhook url: {webhook_url}')
-        return res.status_code
-
-    # todo - wait and check if container succesfully restarts
-
-    return res.status_code
-
-# return response status
-def discordNotification(url: str, msg: str) -> int:
-    res = req.post(url=url, json={
-        "content": msg,
-    })
-    
-    return res.status_code
