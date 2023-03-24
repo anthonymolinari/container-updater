@@ -1,8 +1,11 @@
 import threading
 import asyncio
 import aiocron
+import logging
 
-from utils import logger, config as con, updater
+from utils.logger import log, error
+from utils import config as con
+from utils import updater
 from providers.servarr import servarrUpdate
 from providers.portainer import portainerWebhook
 
@@ -12,7 +15,7 @@ def main(config):
 
     # create threads for each container
     for container in config['containers']:
-        logger.log(f'spawning worker for: {container["name"]}')
+        log(f'spawning worker for: {container["name"]}')
         threads.append(
             threading.Thread(
                 target=updater, 
@@ -27,14 +30,22 @@ def main(config):
 
 
 async def runner(config: any):
-    logger.log('awaiting next scheduled job...')
+    log('awaiting next scheduled job...')
     await aiocron.crontab(config['schedule']).next()
     main(config)
 
 
 if __name__ == '__main__':
-    config = con.loadConfig("./config/config.yml")
-    if not con.validate(config):
+    logger = logging.basicConfig(
+        filename="./logs/container-updater.logs",
+        filemode='a',
+        format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+        datefmt='%H:%M:%S',
+        level=logging.DEBUG           
+    )
+
+    config = con.load_config("./config/config.yml")
+    if not con.validate_config(config):
         exit(2)
     
     loop = asyncio.get_event_loop_policy().get_event_loop()

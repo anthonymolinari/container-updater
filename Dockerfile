@@ -1,6 +1,7 @@
 FROM python:3.10-slim-buster
 
 ENV TZ=America/Los_Angeles
+ENV PYTHONUNBUFFERED=1
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -13,7 +14,9 @@ RUN mkdir /app/src
 COPY src/ /app/src/
 
 RUN mkdir /app/config
+RUN mkdir /app/logs
 
 COPY config/config.example.yml /app/config/config.yml
 
-CMD ["python", "src/main.py"]
+# CMD ["python", "-u", "src/main.py"]
+CMD [ "stdbuf", "-oL", "python", "/app/src/main.py" ]

@@ -5,3 +5,6 @@ __pycache__
 go.mod
 go.sum
 dagger/pipeline.go
+deploy/.terraform*
+deploy/*.tfstate*
+logs/*
