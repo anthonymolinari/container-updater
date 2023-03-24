@@ -6,4 +6,7 @@ services:
     image: anthonymolinari/container-updater:latest
     volumes:
       - /path/on/host/config:/app/config
+      - /path/on/host/logs:/app/logs
+    environment:
+      - TZ=America/Los_Angeles
     

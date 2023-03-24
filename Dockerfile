@@ -14,9 +14,9 @@ RUN mkdir /app/src
 COPY src/ /app/src/
 
 RUN mkdir /app/config
-RUN mkdir /app/logs
+RUN mkdir /app/logs 
 
-COPY config/config.example.yml /app/config/config.yml
+COPY config/config.example.yml /app/config/config.yml 
+RUN touch /app/logs/container-updater.logs
 
-# CMD ["python", "-u", "src/main.py"]
-CMD [ "stdbuf", "-oL", "python", "/app/src/main.py" ]
+CMD ["python", "-u", "src/main.py"]
