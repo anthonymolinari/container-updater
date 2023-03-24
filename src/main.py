@@ -48,6 +48,8 @@ if __name__ == '__main__':
     if not validate_config(config):
         exit(2)
     
+    log("config is valid...")
+
     loop = asyncio.get_event_loop_policy().get_event_loop()
     
     while True:
