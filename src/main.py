@@ -4,8 +4,8 @@ import aiocron
 import logging
 
 from utils.logger import log, error
-from utils import config as con
-from utils import updater
+from utils.config import load_config, validate_config
+from utils.updater import updater
 from providers.servarr import servarrUpdate
 from providers.portainer import portainerWebhook
 
@@ -44,8 +44,8 @@ if __name__ == '__main__':
         level=logging.DEBUG           
     )
 
-    config = con.load_config("./config/config.yml")
-    if not con.validate_config(config):
+    config = load_config("./config/config.yml")
+    if not validate_config(config):
         exit(2)
     
     loop = asyncio.get_event_loop_policy().get_event_loop()
