@@ -1,11 +1,13 @@
 from datetime import datetime
-
+import logging
 
 def log(msg: str):
     now = datetime.now()
-    print(f'[{now.strftime("%H:%M:%S")}]: {msg}')
+    logging.info(msg)
+    print(f'[{now.strftime("%H:%M:%S")}]: {msg}', flush=True)
 
 
 def error(msg: str):
     now = datetime.now()
-    print(f'[{now.strftime("%H:%M:%S")}][ERROR]: {msg}')
+    logging.error(msg)
+    print(f'[{now.strftime("%H:%M:%S")}][ERROR]: {msg}', flush=True)

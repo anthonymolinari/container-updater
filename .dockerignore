@@ -8,3 +8,7 @@ docker-compose.yml
 dockerfile
 *config.yml
 .env
+Jenkinsfile
+dagger
+deploy
+logs/*
