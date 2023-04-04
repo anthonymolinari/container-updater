@@ -6,6 +6,7 @@ import logging
 from utils.logger import log, error
 from utils.config import load_config, validate_config
 from utils.updater import updater
+
 from providers.servarr import servarrUpdate
 from providers.portainer import portainerWebhook
 

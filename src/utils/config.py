@@ -3,6 +3,7 @@ from utils import logger
 
 def load_config(path: str) -> any:
     logger.log("loading config...")
+
     try:
         with open(path, 'r') as config_file:
             config = yaml.safe_load(config_file)
@@ -11,6 +12,7 @@ def load_config(path: str) -> any:
         logger.log("terminating...")
         exit(1)
     logger.log("succesfully loaded config...")
+
     return config
 
 
