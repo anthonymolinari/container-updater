@@ -3,9 +3,9 @@ pipeline {
     environment {
         DOCKERHUB_USERNAME = credentials("DOCKERHUB_USERNAME")
         DOCKERHUB_TOKEN    = credentials("DOCKERHUB_TOKEN")
-        TF_VAR_docker_host = ''
-        TF_VAR_config_path = ''
-        TF_VAR_logs_path   = ''
+        TF_VAR_docker_host = credentials("DOCKER_HOST") 
+        TF_VAR_config_path = '/mnt/ssd-500GB/docker/container-updater/config'
+        TF_VAR_logs_path   = '/mnt/ssd-500GB/docker/container-updater/logs'
     }
     stages {
         stage('run dagger ci') {
@@ -18,8 +18,7 @@ pipeline {
                     } else {
                         sh 'python ./dagger/pipeline.py --tag=dev'
                     }
-                }
-                
+                }   
             }
         }
         stage('deploy w/ terraform') {

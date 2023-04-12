@@ -1,6 +1,8 @@
 # Container Updater
 A python script that uses portainer webhooks to update containers.
 
+![docker pulls](https://img.shields.io/docker/pulls/anthonymolinari/container-updater?style=for-the-badge)
+
 ## Supports Version Checks
 - servarr applications: sonarr, radarr, prowlarr, lidarr, etc.
 - coming soon plex, jellyfin, tautulli
