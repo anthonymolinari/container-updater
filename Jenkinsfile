@@ -10,17 +10,20 @@ pipeline {
     stages {
         stage('run dagger ci') {
             steps {
-                def tag = "";
-                if ("${env.BRANCH_NAME}" == "main") {
-                    tag = "latest"
-                } else {
-                    tag = "dev"
-                }
+                script {
+                    def tag = "";
+                    if ("${env.BRANCH_NAME}" == "main") {
+                        tag = "latest"
+                    } else {
+                        tag = "unstable"
+                    }
 
-                sh '''
-                    pip install -r ./dagger/requirements.txt
-                    python ./dagger/pipeline.py --tag=$tag
-                '''
+                    sh '''
+                        pip install -r ./dagger/requirements.txt
+                        python ./dagger/pipeline.py --tag=$tag
+                    '''    
+                }
+                
             }
         }
         stage('deploy w/ terraform') {
