@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent shasta
     environment {
         DOCKERHUB_USERNAME = ''
         DOCKERHUB_TOKEN    = ''
@@ -10,13 +10,23 @@ pipeline {
     stages {
         stage('run dagger ci') {
             steps {
+                def tag
+                if ("${env.BRANCH_NAME}" == "main") {
+                    tag = "latest"
+                } else {
+                    tag = "dev"
+                }
+
                 sh '''
                     pip install -r ./dagger/requirements.txt
-                    python ./dagger/pipeline.py
+                    python ./dagger/pipeline.py --tag=$tag
                 '''
             }
         }
         stage('deploy w/ terraform') {
+            when {
+                environment(name: 'BRANCH_NAME', value: 'main')
+            }
             steps {
                 sh '''
                     cd deploy
@@ -26,6 +36,9 @@ pipeline {
             }
         }
         stage('cleanup') {
+            when {
+                environment(name: 'BRANCH_NAME', value: 'main')
+            }
             steps {
                 sh 'rm deploy/.terraform* deploy/*.tfstate*'
             }
