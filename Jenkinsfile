@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('run dagger ci') {
             steps {
-                def tag
+                def tag = "";
                 if ("${env.BRANCH_NAME}" == "main") {
                     tag = "latest"
                 } else {
