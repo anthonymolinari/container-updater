@@ -24,20 +24,18 @@ async def buildImage():
           config = repo.directory("./config")
 
           # setup build env
-          build = (
+          build_dir = (
                client.container()
                     .with_directory("/build/src", src)
                     .with_directory("/build/config", config)
                     .with_file("/build/requirements.txt", requirements)
                     .with_file("/build/Dockerfile", dockerfile)
                     .with_file("/build/.dockerignore", ignore)
-                    .with_workdir("/build")
+                    .directory("/build")
           )
 
-          build_dir = build.directory("/build")
-
           push = (
-               build
+               client.container()
                     .build(build_dir)
                     .publish(f"docker.io/anthonymolinari/container-updater:{args.tag}")
           )
