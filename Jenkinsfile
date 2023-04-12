@@ -20,7 +20,7 @@ pipeline {
 
                     sh '''
                         pip install -r ./dagger/requirements.txt
-                        python ./dagger/pipeline.py --tag=$tag
+                        python ./dagger/pipeline.py --tag=${tag}
                     '''    
                 }
                 
