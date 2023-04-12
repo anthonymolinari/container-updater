@@ -19,6 +19,7 @@ async def buildImage():
           # gather files for container build
           dockerfile = repo.file("Dockerfile")
           ignore = repo.file(".dockerignore")
+          requirements = repo.file("requirements.txt")
           src = repo.directory("./src")
           config = repo.directory("./config")
 
@@ -27,6 +28,7 @@ async def buildImage():
                client.container()
                     .with_directory("/build/src", src)
                     .with_directory("/build/config", config)
+                    .with_file("/build/requirements.txt", requirements)
                     .with_file("/build/Dockerfile", dockerfile)
                     .with_file("/build/.dockerignore", ignore)
                     .with_workdir("/build")
