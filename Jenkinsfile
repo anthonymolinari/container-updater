@@ -1,8 +1,8 @@
 pipeline {
-    agent shasta
+    agent any
     environment {
-        DOCKERHUB_USERNAME = ''
-        DOCKERHUB_TOKEN    = ''
+        DOCKERHUB_USERNAME = credentials("DOCKERHUB_USERNAME")
+        DOCKERHUB_TOKEN    = credentials("DOCKERHUB_TOKEN")
         TF_VAR_docker_host = ''
         TF_VAR_config_path = ''
         TF_VAR_logs_path   = ''
