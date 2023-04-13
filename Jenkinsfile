@@ -33,13 +33,5 @@ pipeline {
                 '''
             }
         }
-        stage('cleanup') {
-            when {
-                environment(name: 'BRANCH_NAME', value: 'main')
-            }
-            steps {
-                sh 'rm deploy/.terraform* deploy/*.tfstate*'
-            }
-        }
     }
 }
