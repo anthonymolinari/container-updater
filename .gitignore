@@ -7,4 +7,5 @@ go.sum
 dagger/pipeline.go
 deploy/.terraform*
 deploy/*.tfstate*
+deploy/graph.svg
 logs/*

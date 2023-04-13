@@ -1,46 +1,58 @@
 import sys
 import anyio
 import dagger 
-import os
-from decouple import config
+import argparse
+
+from utils.dockerlogin import dockerLogin, dockerLogout
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--tag", help="docker image tag", default="unstable")
+parser.add_argument("--no-login", help="do not handle registry login w/ this script", action='store_true')
+
+args = parser.parse_args()
 
 async def buildImage():
      async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
-          src = client.host().directory(".")
-          python = (
-               client.container()
-               .with_mounted_directory("/app", src)
-               .with_workdir("/app")
-               .build(src)
-               .publish("docker.io/anthonymolinari/container-updater:latest")
-          )
-          await python
+          repo = client.host().directory(".")
 
+          # gather files for container build
+          dockerfile = repo.file("Dockerfile")
+          ignore = repo.file(".dockerignore")
+          requirements = repo.file("requirements.txt")
+          src = repo.directory("./src")
+          config = repo.directory("./config")
+
+          # setup build env
+          build_dir = (
+               client.container()
+                    .with_directory("/build/src", src)
+                    .with_directory("/build/config", config)
+                    .with_file("/build/requirements.txt", requirements)
+                    .with_file("/build/Dockerfile", dockerfile)
+                    .with_file("/build/.dockerignore", ignore)
+                    .directory("/build")
+          )
+
+          push = (
+               client.container()
+                    .build(build_dir)
+                    .publish(f"docker.io/anthonymolinari/container-updater:{args.tag}")
+          )
+          await push
      print("Pipeline Done")
 
 
-def dockerLogin():
-     USERNAME = os.getenv('DOCKERHUB_USERNAME')
-     TOKEN = os.getenv('DOCKERHUB_TOKEN')
-
-     if USERNAME is None or TOKEN is None:
-          # use local .env
-          USERNAME = config('DOCKERHUB_USERNAME')
-          TOKEN = config('DOCKERHUB_TOKEN')
-
-     if os.system(f'docker login -u {USERNAME} -p {TOKEN}') != 0:
-          print(f'Error login failed')
-          sys.exit(1)
-     
-
-def dockerLogout():
-     if os.system('docker logout') != 0:
-          print(f'Error logout failed')
-          sys.exit(1)
-     
-
 if __name__ == "__main__":
-     dockerLogin()
-     anyio.run(buildImage)
-     dockerLogout()
+     print("running...")
+
+     try:
+          if not args.no_login:
+               dockerLogin()
+          anyio.run(buildImage)
+          if not args.no_login:
+               dockerLogout()
+     except:
+          print('Error Running Pipeline')
+          sys.exit(3)
           
