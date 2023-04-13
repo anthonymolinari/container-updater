@@ -14,6 +14,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: whaletrade/whaletrade
-          short-description: A Social Paper Trading App
+          repository: anthonymolinari/container-updater
+          short-description: Update containers with portainer webhooks
           readme-filepath: ./docker.md
