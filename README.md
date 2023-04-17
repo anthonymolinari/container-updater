@@ -21,7 +21,7 @@ containers:
 
   - name: "sonarr"
     portainer:
-      webhook: ""
+      webhook: "" # webhook url from portainer
     container:
       isServarr: true
       apiVer: "v3"
