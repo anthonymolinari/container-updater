@@ -29,8 +29,8 @@ pipeline {
                 sh '''
                     cd deploy
                     terraform init
-                    terraform destroy -auto-approve
-                    terraform apply -auto-approve
+                    terraform destroy -auto-approve -no-color
+                    terraform apply -auto-approve -no-color
                 '''
             }
         }
