@@ -3,6 +3,8 @@ A python script that uses portainer webhooks to update containers.
 
 ![docker pulls](https://img.shields.io/docker/pulls/anthonymolinari/container-updater?style=for-the-badge)
 
+[![Upload Dockerhub Description](https://github.com/anthonymolinari/container-updater/actions/workflows/docs.yml/badge.svg)](https://github.com/anthonymolinari/container-updater/actions/workflows/docs.yml)
+
 ## Supports Version Checks
 - servarr applications: sonarr, radarr, prowlarr, lidarr, etc.
 - coming soon plex, jellyfin, tautulli
@@ -86,19 +88,3 @@ services:
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
-
-## Docker Compose
-```
-version: '3.0'
-
-services:
-  container_updater:
-    container_name: container_updater
-    image: anthonymolinari/container-updater:latest
-    volumes:
-      - /path/on/host/config:/app/config
-      - /path/on/host/logs:/app/logs
-    environment:
-      - TZ=America/Los_Angeles
-    restart: unless-stopped
-```

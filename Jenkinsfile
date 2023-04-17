@@ -29,16 +29,8 @@ pipeline {
                 sh '''
                     cd deploy
                     terraform init
-                    terraform apply -auto-approve
+                    terraform apply -auto-approve -force
                 '''
-            }
-        }
-        stage('cleanup') {
-            when {
-                environment(name: 'BRANCH_NAME', value: 'main')
-            }
-            steps {
-                sh 'rm deploy/.terraform* deploy/*.tfstate*'
             }
         }
     }
