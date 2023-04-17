@@ -14,7 +14,7 @@ provider "docker" {
 
 resource "docker_image" "container_updater" {
   name = "anthonymolinari/container-updater:latest"
-  keep_locally = false
+  keep_locally = true
 }
 
 resource "docker_container" "container_updater" {
