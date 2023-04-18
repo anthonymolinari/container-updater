@@ -9,3 +9,5 @@ deploy/.terraform*
 deploy/*.tfstate*
 deploy/graph.svg
 logs/*
+Todo.md
+
